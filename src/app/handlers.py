@@ -21,7 +21,7 @@ async def f_response(message: Message):
     answer_message_obj = await message.answer("⏳ <i>Подождите...</i>")
     response = await generate_response(message.text)
     await BOT.edit_message_text(
-        chat_id=message.from_user.id,
+        chat_id=message.from_user.id,       
         message_id=answer_message_obj.message_id,
         text=response
     )

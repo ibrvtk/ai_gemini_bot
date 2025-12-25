@@ -21,9 +21,14 @@ CLIENT = genai.Client(api_key=API_KEY)
 
 
 async def generate_response(text: str) -> str:
-    response = CLIENT.models.generate_content(
-        model=f"models/{AI_MODEL}",
-        contents=f"{text}\n\n\n{REQUEST_SIGNATURE}"
-    )
+    try:
+        response = CLIENT.models.generate_content(
+            model=f"models/{AI_MODEL}",
+            contents=f"{text}\n\n\n{REQUEST_SIGNATURE}"
+        )
+    except Exception as e:
+        if "429" in str(e):
+            return "e:429"
+        return "e:*"
 
     return response.text
